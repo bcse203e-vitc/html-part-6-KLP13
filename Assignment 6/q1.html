@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Form</title>
+  <style>
+    .error { color: red; font-size: 0.9em; }
+    .success { color: green; font-size: 1em; font-weight: bold; }
+    button:disabled { background: #ccc; }
+  </style>
+</head>
+<body>
+  <h3>Registration Form</h3>
+  <form id="regForm">
+    Name: <input type="text" id="name">
+    <div id="nameError" class="error"></div><br>
+
+    Email: <input type="text" id="email">
+    <div id="emailError" class="error"></div><br>
+
+    Password: <input type="password" id="password">
+    <div id="passwordError" class="error"></div><br>
+
+    <button type="submit" id="submitBtn" disabled>Register</button>
+  </form>
+
+  <div id="successMsg" class="success"></div>
+
+  <script>
+    const name = document.getElementById("name");
+    const email = document.getElementById("email");
+    const pass = document.getElementById("password");
+    const btn = document.getElementById("submitBtn");
+    const successMsg = document.getElementById("successMsg");
+
+    function validateName() {
+      if (name.value.trim() === "") {
+        document.getElementById("nameError").textContent = "Name is required!";
+        return false;
+      }
+      document.getElementById("nameError").textContent = "";
+      return true;
+    }
+
+    function validateEmail() {
+      const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!pattern.test(email.value)) {
+        document.getElementById("emailError").textContent = "Invalid email format!";
+        return false;
+      }
+      document.getElementById("emailError").textContent = "";
+      return true;
+    }
+
+    function validatePass() {
+      const pattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+      if (!pattern.test(pass.value)) {
+        document.getElementById("passwordError").textContent = 
+          "Password must be 8+ chars, include a number and uppercase letter!";
+        return false;
+      }
+      document.getElementById("passwordError").textContent = "";
+      return true;
+    }
+
+    function checkForm() {
+      btn.disabled = !(validateName() && validateEmail() && validatePass());
+    }
+
+    name.addEventListener("blur", checkForm);
+    email.addEventListener("blur", checkForm);
+    pass.addEventListener("blur", checkForm);
+
+    document.getElementById("regForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      if (validateName() && validateEmail() && validatePass()) {
+        successMsg.textContent = "Registration Successful!";
+      } else {
+        successMsg.textContent = "";
+      }
+    });
+  </script>
+</body>
+</html>

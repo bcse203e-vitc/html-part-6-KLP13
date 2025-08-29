@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Email Validation</title>
+  <style>
+    .error { color: red; font-weight: bold; }
+    .success { color: green; font-weight: bold; }
+    input { padding: 5px; margin-right: 5px; }
+    button { padding: 5px 10px; }
+  </style>
+</head>
+<body>
+  <h3>Email Validation</h3>
+  <input type="text" id="email" placeholder="Enter Email">
+  <button id="verifyBtn">Verify</button>
+  <div id="msg"></div>
+
+  <script>
+    const emailInput = document.getElementById("email");
+    const msg = document.getElementById("msg");
+    const btn = document.getElementById("verifyBtn");
+
+    btn.addEventListener("click", function() {
+      const regex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+      if (emailInput.value.trim() === "") {
+        msg.textContent = "Email is required!";
+        msg.className = "error";
+      } 
+      else if (regex.test(emailInput.value)) {
+        msg.textContent = "Valid Email";
+        msg.className = "success";
+      } 
+      else {
+        msg.textContent = "Invalid Email";
+        msg.className = "error";
+      }
+    });
+  </script>
+</body>
+</html>
